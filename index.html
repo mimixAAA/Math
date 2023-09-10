@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math For Fun</title>
+</head>
+<style>
+   body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color:palegoldenrod ;
+}
+
+.container {
+    max-width: 400px;
+    margin-top: 150px;
+    margin-left: 375px;
+    padding: 50px;
+    background-color: white;
+    border: 10px solid red;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+button {
+    width: 40%;
+    height: 50px;
+    background: #fb6868;
+    border-radius: 50px;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    margin-top:20px ;
+}
+
+
+
+</style>
+<body>
+    <div class="container">
+        <h1>Math For Fun</h1>
+        <p style="font-size: 20px;">คำถาม: <span id="question"></span></p>
+        <input type="number" id="userAnswer" >
+        <div class="bt">
+        <button id="checkButton">ตอบ</button>
+        </div>
+        <p id="result"></p>
+        <p>คะแนน: <span id="score">0</span></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+<script>
+
+function generateQuestion() {
+    const n1 = Math.floor(Math.random() * 100) + 1;
+    const n2 = Math.floor(Math.random() * 100) + 1;
+    const op = ['+', '-', '*', '/'];
+    const op1 = op[Math.floor(Math.random() * op.length)];
+    let answer;
+
+    switch (op1) {
+        case '+':
+            answer = n1 + n2;
+            break;
+        case '-':
+            answer = n1 - n2;
+            break;
+        case '*':
+            answer = n1 * n2;
+            break;
+        case '/':
+            answer = (n1 / n2).toFixed(2);
+            break;
+    }
+
+    const question = `${n1} ${op1} ${n2}`;
+    return { question, answer };
+}
+
+let { question, answer } = generateQuestion();
+document.getElementById('question').textContent = question;
+
+document.getElementById('checkButton').addEventListener('click', function() {
+    const userAnswer = parseFloat(document.getElementById('userAnswer').value);
+    const resultElement = document.getElementById('result');
+    const scoreElement = document.getElementById('score');
+
+    if (userAnswer === parseFloat(answer)) {
+        resultElement.textContent = 'คำตอบถูกต้อง!!';
+        scoreElement.textContent = parseInt(scoreElement.textContent) + 1;
+    } else {
+        resultElement.textContent = `เฉลย คือ ${answer} ลองอีกครั้งนะครับ`;
+    }
+
+    ({ question, answer } = generateQuestion());
+    document.getElementById('question').textContent = question;
+    document.getElementById('userAnswer').value = '';
+});
+</script>
